@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1160" viewBox="0 0 1600 1160" role="img" aria-labelledby="title description">
+  <title id="title">Looply draft entity relationship diagram</title>
+  <desc id="description">Draft database schema for Looply showing users, categories, projects, reviews, and favorites with all attributes inside their tables and labeled relationship arrows.</desc>
+  <defs>
+    <style>
+      .canvas { fill: #f2eee5; }
+      .title { fill: #4b3621; font: 700 30px "Plus Jakarta Sans", Arial, sans-serif; }
+      .subtitle { fill: #766a5e; font: 400 15px "Plus Jakarta Sans", Arial, sans-serif; }
+      .entity { fill: #fff; stroke: #4b3621; stroke-width: 2; }
+      .header { fill: #678d9a; }
+      .name { fill: #ebd1a7; font: 700 18px "Plus Jakarta Sans", Arial, sans-serif; }
+      .field, .key { fill: #4b3621; font: 400 14px "Plus Jakarta Sans", Arial, sans-serif; }
+      .key { font-weight: 700; }
+      .connector { fill: none; stroke: #678d9a; stroke-width: 2.5; marker-end: url(#arrow); }
+      .relationship { fill: #4b3621; font: 700 12px "Plus Jakarta Sans", Arial, sans-serif; }
+      .legend { fill: #fff; stroke: #d2b995; stroke-width: 1.5; }
+      .legend-text { fill: #766a5e; font: 400 12px "Plus Jakarta Sans", Arial, sans-serif; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#678d9a"/>
+    </marker>
+  </defs>
+
+  <rect class="canvas" width="1600" height="1160"/>
+  <text class="title" x="800" y="45" text-anchor="middle">Looply — Draft Entity-Relationship Diagram</text>
+  <text class="subtitle" x="800" y="73" text-anchor="middle">Milestone 1 database planning · every listed attribute is a column inside its table</text>
+
+  <g transform="translate(55 125)">
+    <rect class="entity" width="430" height="390" rx="14"/>
+    <rect class="header" width="430" height="48" rx="14"/><rect class="header" y="32" width="430" height="16"/>
+    <text class="name" x="20" y="31">users</text>
+    <text class="key" x="20" y="78">🔑 id</text><text class="field" x="250" y="78">INT UNSIGNED</text>
+    <text class="field" x="20" y="105">first_name</text><text class="field" x="250" y="105">VARCHAR(100)</text>
+    <text class="field" x="20" y="132">last_name</text><text class="field" x="250" y="132">VARCHAR(100)</text>
+    <text class="key" x="20" y="159">email</text><text class="field" x="250" y="159">VARCHAR(255) UNIQUE</text>
+    <text class="field" x="20" y="186">password_hash</text><text class="field" x="250" y="186">VARCHAR(255)</text>
+    <text class="field" x="20" y="213">role</text><text class="field" x="250" y="213">user | admin</text>
+    <text class="field" x="20" y="240">avatar_url</text><text class="field" x="250" y="240">VARCHAR(500) NULL</text>
+    <text class="field" x="20" y="267">location</text><text class="field" x="250" y="267">VARCHAR(255) NULL</text>
+    <text class="field" x="20" y="294">bio</text><text class="field" x="250" y="294">TEXT NULL</text>
+    <text class="field" x="20" y="321">created_at</text><text class="field" x="250" y="321">DATETIME</text>
+    <text class="field" x="20" y="348">updated_at</text><text class="field" x="250" y="348">DATETIME</text>
+  </g>
+
+  <g transform="translate(620 125)">
+    <rect class="entity" width="360" height="250" rx="14"/>
+    <rect class="header" width="360" height="48" rx="14"/><rect class="header" y="32" width="360" height="16"/>
+    <text class="name" x="20" y="31">categories</text>
+    <text class="key" x="20" y="78">🔑 id</text><text class="field" x="205" y="78">INT UNSIGNED</text>
+    <text class="key" x="20" y="105">name</text><text class="field" x="205" y="105">VARCHAR(100) UNIQUE</text>
+    <text class="field" x="20" y="132">description</text><text class="field" x="205" y="132">TEXT NULL</text>
+    <text class="field" x="20" y="159">created_at</text><text class="field" x="205" y="159">DATETIME</text>
+    <text class="field" x="20" y="186">updated_at</text><text class="field" x="205" y="186">DATETIME</text>
+  </g>
+
+  <g transform="translate(1115 125)">
+    <rect class="entity" width="430" height="390" rx="14"/>
+    <rect class="header" width="430" height="48" rx="14"/><rect class="header" y="32" width="430" height="16"/>
+    <text class="name" x="20" y="31">projects</text>
+    <text class="key" x="20" y="78">🔑 id</text><text class="field" x="250" y="78">INT UNSIGNED</text>
+    <text class="key" x="20" y="105">user_id</text><text class="field" x="250" y="105">FK → users.id</text>
+    <text class="key" x="20" y="132">category_id</text><text class="field" x="250" y="132">FK → categories.id</text>
+    <text class="field" x="20" y="159">title</text><text class="field" x="250" y="159">VARCHAR(255)</text>
+    <text class="field" x="20" y="186">description</text><text class="field" x="250" y="186">TEXT NULL</text>
+    <text class="field" x="20" y="213">image_url</text><text class="field" x="250" y="213">VARCHAR(500)</text>
+    <text class="field" x="20" y="240">privacy</text><text class="field" x="250" y="240">public | private</text>
+    <text class="field" x="20" y="267">created_at</text><text class="field" x="250" y="267">DATETIME</text>
+    <text class="field" x="20" y="294">updated_at</text><text class="field" x="250" y="294">DATETIME</text>
+  </g>
+
+  <g transform="translate(250 665)">
+    <rect class="entity" width="470" height="362" rx="14"/>
+    <rect class="header" width="470" height="48" rx="14"/><rect class="header" y="32" width="470" height="16"/>
+    <text class="name" x="20" y="31">reviews</text>
+    <text class="key" x="20" y="78">🔑 id</text><text class="field" x="270" y="78">INT UNSIGNED</text>
+    <text class="key" x="20" y="105">project_id</text><text class="field" x="270" y="105">FK → projects.id</text>
+    <text class="key" x="20" y="132">user_id</text><text class="field" x="270" y="132">FK → users.id</text>
+    <text class="field" x="20" y="159">rating</text><text class="field" x="270" y="159">TINYINT 1–5</text>
+    <text class="field" x="20" y="186">pattern_source</text><text class="field" x="270" y="186">TEXT NULL</text>
+    <text class="field" x="20" y="213">pattern_url</text><text class="field" x="270" y="213">VARCHAR(500) NULL</text>
+    <text class="field" x="20" y="240">yarn_used</text><text class="field" x="270" y="240">VARCHAR(255) NULL</text>
+    <text class="field" x="20" y="267">hook_needle_size</text><text class="field" x="270" y="267">VARCHAR(100) NULL</text>
+    <text class="field" x="20" y="294">notes</text><text class="field" x="270" y="294">TEXT NULL</text>
+    <text class="field" x="20" y="321">created_at</text><text class="field" x="270" y="321">DATETIME</text>
+    <text class="field" x="20" y="348">updated_at</text><text class="field" x="270" y="348">DATETIME</text>
+  </g>
+
+  <g transform="translate(955 700)">
+    <rect class="entity" width="470" height="250" rx="14"/>
+    <rect class="header" width="470" height="48" rx="14"/><rect class="header" y="32" width="470" height="16"/>
+    <text class="name" x="20" y="31">favorites</text>
+    <text class="key" x="20" y="78">🔑 user_id</text><text class="field" x="270" y="78">FK → users.id</text>
+    <text class="key" x="20" y="105">🔑 project_id</text><text class="field" x="270" y="105">FK → projects.id</text>
+    <text class="field" x="20" y="132">created_at</text><text class="field" x="270" y="132">DATETIME</text>
+    <text class="field" x="20" y="159">PRIMARY KEY</text><text class="field" x="270" y="159">(user_id, project_id)</text>
+  </g>
+
+  <path class="connector" d="M485 260 H800 V455 H1115"/>
+  <text class="relationship" x="790" y="445" text-anchor="middle">one user owns many projects</text>
+  <path class="connector" d="M980 250 H1040 V430 H1115"/>
+  <text class="relationship" x="1045" y="420" text-anchor="middle">one category has many projects</text>
+  <path class="connector" d="M270 515 V610 H340 V665"/>
+  <text class="relationship" x="170" y="600">one user writes many reviews</text>
+  <path class="connector" d="M1325 515 V600 H630 V665"/>
+  <text class="relationship" x="990" y="590" text-anchor="middle">one project has many reviews</text>
+  <path class="connector" d="M485 400 V590 H1190 V700"/>
+  <text class="relationship" x="820" y="580" text-anchor="middle">users save projects through favorites</text>
+  <path class="connector" d="M1325 515 V625 H1360 V700"/>
+  <text class="relationship" x="1380" y="615" text-anchor="middle">many users save many projects</text>
+
+  <g transform="translate(55 1065)">
+    <rect class="legend" width="1490" height="55" rx="10"/>
+    <text class="legend-text" x="20" y="24">🔑 Primary key</text>
+    <text class="legend-text" x="180" y="24">FK = foreign key</text>
+    <text class="legend-text" x="350" y="24">NULL = optional field</text>
+    <text class="legend-text" x="570" y="24">favorites has a composite primary key</text>
+    <text class="legend-text" x="20" y="44">Arrows point from the referenced/parent entity toward the related/child entity. This is a draft schema.</text>
+  </g>
+</svg>
