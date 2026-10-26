@@ -1,0 +1,16 @@
+# Local configuration and secrets
+backend/config/config.php
+backend/config/*.local.php
+
+# Runtime logs
+backend/logs/*
+!backend/logs/.gitkeep
+
+# PHP dependencies
+vendor/
+backend/vendor/
+
+# Local environment files
+.env
+.env.*
+!.env.example
