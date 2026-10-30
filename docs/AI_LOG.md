@@ -123,3 +123,16 @@
 
 ### Where the AI was wrong — ERD field and relationship layout
 - No errors yet.
+
+## Milestone 2
+
+### Tools and tasks
+- **Tool/model:** GitHub Copilot in VS Code
+- **Task:** Implement the BaseDao and one DAO for every database table using the uploaded Lab 3/tutorial and the linked GitHub examples; create CRUD only for now.
+- **Main prompt:** “Using the github link repository and document i uploaded to you (lab3) create the BaseDao aswell as DAO file for every table. The syntax should follow the examples on git and lab file. Create only CRUD for now and later we might implement custom queires depending on our needs.”
+- **What was generated:** [backend/dao/BaseDao.php](../backend/dao/BaseDao.php), the five entity DAOs, database configuration files, a DAO smoke test, and README setup instructions.
+- **What was kept, changed, or rejected:** I rejceted everything because he did not follow the syntax we learned in class. 
+
+### Where the AI was wrong
+-First mistake is making completely diffrent code from what I asked him.
+-Second mistake is that he did not tell me that he could not acess a github repositry until I asked him if he can do that.

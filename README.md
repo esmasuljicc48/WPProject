@@ -17,6 +17,57 @@ for later milestones.
 - Database planned: MySQL accessed through PDO
 - Local development: XAMPP or another local HTTP server
 
+## Database and DAO layer
+
+The MySQL schema is in [database/looply.sql](database/looply.sql). The backend
+DAO layer is in [backend/dao/](backend/dao/) and provides prepared-statement
+CRUD operations for users, categories, projects, reviews, and favorites.
+
+To configure and test the DAOs locally:
+
+1. Import [database/looply.sql](database/looply.sql) into MySQL.
+2. Copy `backend/config/config.example.php` to `backend/config/config.php`
+   and edit the database credentials.
+   The password must be set in `backend/config/config.php` (or supplied as
+   an environment variable); do not add it to the committed example file.
+   The values must match DataGrip's host, port, database, user, and password.
+3. From the repository root, run:
+
+   ```text
+   php backend/tests/dao_inspect.php
+   ```
+
+   In PowerShell, you can override the local config for the current terminal
+   session without writing the password to a file:
+
+   ```powershell
+   $env:DB_HOST = "127.0.0.1"
+   $env:DB_PORT = "3306"
+   $env:DB_NAME = "looply"
+   $env:DB_USER = "root"
+   $env:DB_PASSWORD = "the-password-used-by-DataGrip"
+   php backend\tests\dao_inspect.php
+   ```
+
+   If you are already in `backend`, run `php tests\dao_inspect.php` instead.
+   `using password: NO` means that `DB_PASSWORD` was empty or was not set.
+   Also compare DataGrip's host and port: MySQL permissions can differ
+   between `localhost` and `127.0.0.1`, even for the same username.
+
+The smoke test runs in a transaction and rolls back its test records when it
+finishes.
+
+To populate the database with linked demo data, run
+[database/seed_fake_data.sql](database/seed_fake_data.sql) against the `looply`
+database in DataGrip. It creates demo users, categories, public and private
+projects, reviews, and favorites. The demo users use `demo-password` as their
+placeholder password; change it before using these accounts for anything other
+than local testing. The script can be run again without duplicating the demo
+records.
+
+To print the existing records and their relationships without changing
+anything, run `php backend/tests/dao_inspect.php` from the repository root.
+
 ## Main entities and relationships
 
 ### Users
