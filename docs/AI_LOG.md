@@ -136,3 +136,34 @@
 ### Where the AI was wrong
 -First mistake is making completely diffrent code from what I asked him.
 -Second mistake is that he did not tell me that he could not acess a github repositry until I asked him if he can do that.
+
+## Milestone 3
+
+### Tools and tasks
+- **Tool/model:** Copilot SDK in VS Code (model not specified)
+- **Task:** Implement the Milestone 3 services, FlightPHP presentation layer,
+  OpenAPI/Swagger documentation, external API endpoint, and related README
+  updates using the uploaded requirements and course lab patterns.
+- **Main prompt:** “I have uploaded 10 files. First read the Project requirements
+  file. Milestone 1 and 2 are implemeted we are continue the work from there.
+  Other 9 files are HOW you should implement milestone 3.”
+- **What was generated:** Reusable service exceptions and validators, one
+  service per Looply entity, REST routes with centralized error handling,
+  Open-Meteo weather integration, Swagger UI/OpenAPI attributes, a built-in
+  server router, and Milestone 3 README documentation.
+- **What was kept, changed, or rejected:** Existing Milestone 1 frontend,
+  Milestone 2 database schema, and DAO layout were kept. The course sample's
+  `backend/rest` layout was adapted to the repository's existing
+  `backend/dao`, `backend/services`, and `backend/routes` structure.
+
+### Where the AI was wrong
+- **Service method signature:** The first implementation omitted the optional
+  `$id` parameter from two overridden `validate()` methods. PHP's compatibility
+  check exposed this during the first HTTP smoke test; the methods were updated
+  to match `BaseService::validate($entity, $id = null)`.
+- **Built-in server routing:** The first smoke test used `backend/index.php`
+  directly, which correctly served API routes but sent the Swagger URL to the
+  Flight 404 handler because static documentation files were not routed. This
+  was noticed when the Swagger request returned `Endpoint not found`; the
+  project-level `server.php` was added using the course's static-file and
+  backend routing pattern.

@@ -55,6 +55,12 @@ Roles: [admin, user]. Entities: [users, ..., at least 5].
 - frontend/: css/, js/, views/ (one HTML file per view), assets/
 - backend/: routes/, services/, dao/, middleware/, config/, logs/
 - docs/: AI_LOG.md and other documentation
+
+Milestone 3 backend implementation uses `backend/routes/` for FlightPHP route
+definitions, `backend/services/` for business rules and external API calls,
+`backend/dao/` for prepared database access, and `backend/utils/` for shared
+exceptions and validation. OpenAPI documentation lives in
+`backend/public/v1/docs/`, with one attribute-based paths file per route file.
  
 ## Frontend rules
 - Each view is in its own file in frontend/views/.
@@ -66,6 +72,10 @@ Roles: [admin, user]. Entities: [users, ..., at least 5].
 - Only services call DAO classes. Routes never call DAO classes directly.
 - All SQL uses PDO prepared statements.
 - Routes return JSON with correct HTTP status codes.
+- Services throw the reusable HTTP exceptions from `backend/utils/` and the
+  FlightPHP error handler converts them to JSON responses.
+- External API requests must use configured URLs, timeouts, response checks,
+  friendly errors, and runtime logging.
  
 ## Conventions
 - PHP classes: PascalCase (UserService, UserDao). Files are named after the class.
