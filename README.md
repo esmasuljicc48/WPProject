@@ -55,6 +55,14 @@ The ERD is available at [docs/looply-erd.svg](docs/looply-erd.svg).
    composer install
    ```
 
+To reset the local database and reload the demo records, run the following
+from the project root after configuring MySQL:
+
+```text
+Get-Content database/looply.sql | C:\xampp\mysql\bin\mysql.exe -u root -p
+Get-Content database/seed_fake_data.sql | C:\xampp\mysql\bin\mysql.exe -u root -p
+```
+
 With XAMPP, open `http://localhost/WPProject/frontend/` and use the API at
 `http://localhost/WPProject/backend/`.
 
@@ -85,8 +93,10 @@ DELETE /users/{id}
 GET    /projects                   POST   /projects
 GET    /projects/{id}              PUT    /projects/{id}
 DELETE /projects/{id}
-GET    /projects/public
-GET    /projects/user/{user_id}
+GET    /projects?privacy=public|private
+GET    /projects/{id}/reviews
+GET    /users/{id}/projects
+GET    /users/{id}/favorites
 
 GET    /reviews                    POST   /reviews
 GET    /reviews/{id}               PUT    /reviews/{id}
@@ -113,6 +123,8 @@ Open the interactive Swagger UI at
 `http://localhost:8000/backend/public/v1/docs/` with the built-in server.
 The raw OpenAPI document is available at the same path followed by
 `swagger.php`.
+Request examples and expected status codes are maintained in
+[docs/api.http](docs/api.http).
 
 ## Test accounts
 

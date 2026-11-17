@@ -2,14 +2,18 @@
 
 require_once __DIR__ . '/BaseService.php';
 require_once __DIR__ . '/../dao/CategoryDao.php';
+require_once __DIR__ . '/../dao/ProjectDao.php';
 
 class CategoryService extends BaseService
 {
     protected $entity_name = 'Category';
+    private $project_dao;
 
-    public function __construct($dao = null)
+    /** DAOs can be passed in (used by unit tests); by default real DAOs are created. */
+    public function __construct($dao = null, $project_dao = null)
     {
-        parent::__construct($dao ?: new CategoryDao());
+        parent::__construct($dao ?? new CategoryDao());
+        $this->project_dao = $project_dao ?? new ProjectDao();
     }
 
     public function add($category)
@@ -25,9 +29,10 @@ class CategoryService extends BaseService
     public function delete($id)
     {
         $this->get_by_id($id);
-        $project_count = $this->dao->count_projects($id);
-        if ($project_count > 0) {
-            throw new ValidationException("This category still contains $project_count project(s).");
+        $count = $this->project_dao->count_by_category($id);
+        // Rule: a category with projects cannot be deleted.
+        if ($count > 0) {
+            throw new ValidationException("This category still contains $count project(s). Move or delete them first.");
         }
         $this->dao->delete($id);
     }
@@ -41,6 +46,7 @@ class CategoryService extends BaseService
         }
 
         $existing = $this->dao->get_by_name(trim($category['name']));
+        // Rule: category names must be unique.
         if ($existing && (int) $existing['id'] !== (int) $id) {
             throw new ValidationException("A category named '{$category['name']}' already exists.");
         }

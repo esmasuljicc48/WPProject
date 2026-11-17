@@ -10,8 +10,15 @@ class ProjectDao extends BaseDao
         ]);
     }
 
-    public function get_public_feed()
+    public function get_feed($privacy = null)
     {
+        $where = '';
+        $params = [];
+        if ($privacy !== null) {
+            $where = 'WHERE p.privacy = :privacy';
+            $params['privacy'] = $privacy;
+        }
+
         return $this->query(
             'SELECT
                 p.*,
@@ -25,11 +32,19 @@ class ProjectDao extends BaseDao
              JOIN categories c ON c.id = p.category_id
              JOIN users u ON u.id = p.user_id
              LEFT JOIN reviews r ON r.project_id = p.id
-             WHERE p.privacy = :privacy
+             ' . $where . '
              GROUP BY p.id
              ORDER BY p.created_at DESC',
-            ['privacy' => 'public']
+            $params
         );
+    }
+
+    public function count_by_category($category_id)
+    {
+        return (int) $this->query_unique(
+            'SELECT COUNT(*) AS total FROM projects WHERE category_id = :id',
+            ['id' => $category_id]
+        )['total'];
     }
 
     public function get_by_user($user_id)

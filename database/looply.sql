@@ -1,6 +1,8 @@
-CREATE DATABASE IF NOT EXISTS looply
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
+-- Import with: mysql -u root -p < database/looply.sql
+-- or use phpMyAdmin -> Import. Import seed_fake_data.sql after this file.
+-- Local test accounts: maya@example.test, jonah@example.test, nora@example.test.
+DROP DATABASE IF EXISTS looply;
+CREATE DATABASE looply CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE looply;
 
@@ -89,6 +91,8 @@ create table reviews
     constraint fk_reviews_user
         foreign key (user_id) references users (id)
             on update cascade on delete cascade,
+    constraint uq_reviews_user_project
+        unique (user_id, project_id),
     constraint chk_reviews_rating
         check (`rating` between 1 and 5)
 )ENGINE=InnoDB;

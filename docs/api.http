@@ -1,0 +1,147 @@
+@base = http://localhost:8000/backend
+@json = application/json
+
+### Expected status table
+# GET    collection/resource/relationship: 200 success, 404 when the resource does not exist
+# POST   valid resource: 201, invalid input or duplicate relationship: 400
+# PUT    valid resource: 200, invalid input: 400, missing resource: 404
+# DELETE valid resource: 200, invalid relationship: 404, protected category: 400
+# Weather success: 200, invalid query: 400, unknown city: 404, provider failure: 503
+# Unknown route: 404
+
+### API health
+GET {{base}}/
+
+### Categories
+GET {{base}}/categories
+GET {{base}}/categories/1
+GET {{base}}/categories/999999
+
+POST {{base}}/categories
+Content-Type: {{json}}
+
+{
+  "name": "Weaving",
+  "description": "Handwoven textile projects."
+}
+
+PUT {{base}}/categories/1
+Content-Type: {{json}}
+
+{
+  "name": "Knitting",
+  "description": "Projects made with knitting needles."
+}
+
+DELETE {{base}}/categories/999999
+
+### Users
+GET {{base}}/users
+GET {{base}}/users/1
+GET {{base}}/users/999999
+GET {{base}}/users/1/projects
+GET {{base}}/users/1/favorites
+
+POST {{base}}/users
+Content-Type: {{json}}
+
+{
+  "first_name": "Ana",
+  "last_name": "Kovac",
+  "email": "ana@example.test",
+  "password": "Secret123"
+}
+
+PUT {{base}}/users/1
+Content-Type: {{json}}
+
+{
+  "first_name": "Maya",
+  "last_name": "Parker",
+  "email": "maya@example.test",
+  "password": ""
+}
+
+DELETE {{base}}/users/999999
+
+### Projects
+GET {{base}}/projects
+GET {{base}}/projects?privacy=public
+GET {{base}}/projects?privacy=private
+GET {{base}}/projects?privacy=invalid
+GET {{base}}/projects/1
+GET {{base}}/projects/999999
+GET {{base}}/projects/1/reviews
+
+POST {{base}}/projects
+Content-Type: {{json}}
+
+{
+  "user_id": 1,
+  "category_id": 1,
+  "title": "Harbor Mist Cardigan",
+  "description": "A relaxed cardigan in pale blue wool.",
+  "image_url": "https://example.test/cardigan.jpg",
+  "privacy": "public"
+}
+
+PUT {{base}}/projects/1
+Content-Type: {{json}}
+
+{
+  "title": "Updated Cardigan",
+  "privacy": "private"
+}
+
+DELETE {{base}}/projects/999999
+
+### Reviews
+GET {{base}}/reviews
+GET {{base}}/reviews/1
+GET {{base}}/reviews/999999
+
+POST {{base}}/reviews
+Content-Type: {{json}}
+
+{
+  "project_id": 1,
+  "user_id": 1,
+  "rating": 5,
+  "notes": "A relaxing project."
+}
+
+PUT {{base}}/reviews/1
+Content-Type: {{json}}
+
+{
+  "rating": 4
+}
+
+DELETE {{base}}/reviews/999999
+
+### Favorites
+GET {{base}}/favorites
+GET {{base}}/favorites/2/1
+
+POST {{base}}/favorites
+Content-Type: {{json}}
+
+{
+  "user_id": 2,
+  "project_id": 1
+}
+
+PUT {{base}}/favorites/2/1
+Content-Type: {{json}}
+
+{}
+
+DELETE {{base}}/favorites/999999/999999
+
+### Weather
+GET {{base}}/weather/forecast?city=Sarajevo&days=7
+GET {{base}}/weather/forecast?city=Xqzzyy
+GET {{base}}/weather/forecast?city=S
+
+### Unknown route
+GET {{base}}/not-a-route

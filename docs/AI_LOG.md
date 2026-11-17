@@ -145,7 +145,7 @@
   OpenAPI/Swagger documentation, external API endpoint, and related README
   updates using the uploaded requirements and course lab patterns.
 - **Main prompt:** “I have uploaded 10 files. First read the Project requirements
-  file. Milestone 1 and 2 are implemeted we are continue the work from there.
+  file. Milestone 1 and 2 are implemeted we are to continue the work from there.
   Other 9 files are HOW you should implement milestone 3.”
 - **What was generated:** Reusable service exceptions and validators, one
   service per Looply entity, REST routes with centralized error handling,
@@ -167,3 +167,24 @@
   was noticed when the Swagger request returned `Endpoint not found`; the
   project-level `server.php` was added using the course's static-file and
   backend routing pattern.
+
+### Tools and tasks — milestone 3 review corrections
+- **Tool/model:** Copilot SDK in VS Code (model not specified)
+- **Task:** Continue the Milestone 3 review corrections through the remaining
+  phases, including relationship endpoints, OpenAPI synchronization, database
+  verification, and documentation updates.
+- **Main prompt:** “I have uploaded 10 files. First read the Project requirements
+  file. Milestone 1 and 2 are implemeted we are continue the work from there.
+  Other 9 files are HOW you should implement milestone 3.”
+- **What was generated:** Project-review and user-favorite relationship
+  endpoints, synchronized OpenAPI and request documentation, a repeatable local
+  database reset verification, and updated contributor setup guidance.
+- **What was kept, changed, or rejected:** The existing route/service/DAO
+  architecture and database schema were kept. Only the approved review
+  uniqueness constraint and the requested milestone documentation were retained;
+  no commits or pushes were made.
+
+### Where the AI was wrong — milestone 3 review corrections
+- One OpenAPI operation initially lacked a summary after the documentation
+  pass. The generated-specification validation found the missing summary on
+  the review update operation, so it was added before completion.

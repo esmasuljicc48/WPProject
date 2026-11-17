@@ -16,13 +16,4 @@ class CategoryDao extends BaseDao
         );
     }
 
-    public function count_projects($category_id)
-    {
-        $result = $this->query_unique(
-            'SELECT COUNT(*) AS total FROM projects WHERE category_id = :category_id',
-            ['category_id' => $category_id]
-        );
-
-        return (int) $result['total'];
-    }
 }

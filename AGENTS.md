@@ -61,6 +61,8 @@ definitions, `backend/services/` for business rules and external API calls,
 `backend/dao/` for prepared database access, and `backend/utils/` for shared
 exceptions and validation. OpenAPI documentation lives in
 `backend/public/v1/docs/`, with one attribute-based paths file per route file.
+The complete request catalog and expected response statuses are maintained in
+`docs/api.http`.
  
 ## Frontend rules
 - Each view is in its own file in frontend/views/.
@@ -76,6 +78,9 @@ exceptions and validation. OpenAPI documentation lives in
   FlightPHP error handler converts them to JSON responses.
 - External API requests must use configured URLs, timeouts, response checks,
   friendly errors, and runtime logging.
+- To reset local test data, import `database/looply.sql` first and then
+  `database/seed_fake_data.sql`; the first script intentionally recreates the
+  `looply` database.
  
 ## Conventions
 - PHP classes: PascalCase (UserService, UserDao). Files are named after the class.

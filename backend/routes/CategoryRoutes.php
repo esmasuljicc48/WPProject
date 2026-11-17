@@ -1,4 +1,5 @@
 <?php
+/** PRESENTATION LAYER – categories. Keep OpenAPI paths in sync with this file. */
 
 Flight::route('GET /categories', function () {
     Flight::json(Flight::category_service()->get_all());
@@ -9,11 +10,13 @@ Flight::route('GET /categories/@id:[0-9]+', function ($id) {
 });
 
 Flight::route('POST /categories', function () {
-    Flight::json(Flight::category_service()->add(Flight::request()->data->getData()), 201);
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::category_service()->add($data), 201);
 });
 
 Flight::route('PUT /categories/@id:[0-9]+', function ($id) {
-    Flight::json(Flight::category_service()->update(Flight::request()->data->getData(), $id));
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::category_service()->update($data, $id));
 });
 
 Flight::route('DELETE /categories/@id:[0-9]+', function ($id) {

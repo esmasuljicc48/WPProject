@@ -1,4 +1,5 @@
 <?php
+/** PRESENTATION LAYER – users. Keep OpenAPI paths in sync with this file. */
 
 Flight::route('GET /users', function () {
     Flight::json(Flight::user_service()->get_all());
@@ -9,14 +10,20 @@ Flight::route('GET /users/@id:[0-9]+', function ($id) {
 });
 
 Flight::route('POST /users', function () {
-    Flight::json(Flight::user_service()->add(Flight::request()->data->getData()), 201);
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::user_service()->add($data), 201);
 });
 
 Flight::route('PUT /users/@id:[0-9]+', function ($id) {
-    Flight::json(Flight::user_service()->update(Flight::request()->data->getData(), $id));
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::user_service()->update($data, $id));
 });
 
 Flight::route('DELETE /users/@id:[0-9]+', function ($id) {
     Flight::user_service()->delete($id);
     Flight::json(['message' => 'User deleted.']);
+});
+
+Flight::route('GET /users/@id:[0-9]+/projects', function ($id) {
+    Flight::json(Flight::project_service()->get_by_user($id));
 });
