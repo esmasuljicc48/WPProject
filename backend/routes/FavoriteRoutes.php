@@ -14,12 +14,12 @@ Flight::route('GET /users/@id:[0-9]+/favorites', function ($id) {
 });
 
 Flight::route('POST /favorites', function () {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::favorite_service()->add($data), 201);
 });
 
 Flight::route('PUT /favorites/@user_id:[0-9]+/@project_id:[0-9]+', function ($user_id, $project_id) {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::favorite_service()->update($data, $user_id, $project_id));
 });
 

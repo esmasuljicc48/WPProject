@@ -22,7 +22,15 @@ class ReviewDao extends BaseDao
     public function get_by_project($project_id)
     {
         return $this->query(
-            'SELECT * FROM reviews WHERE project_id = :project_id ORDER BY created_at DESC',
+            'SELECT
+                r.*,
+                u.first_name AS reviewer_first_name,
+                u.last_name AS reviewer_last_name,
+                u.avatar_url AS reviewer_avatar_url
+             FROM reviews r
+             JOIN users u ON u.id = r.user_id
+             WHERE r.project_id = :project_id
+             ORDER BY r.created_at DESC',
             ['project_id' => $project_id]
         );
     }

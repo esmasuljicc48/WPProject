@@ -11,12 +11,12 @@ Flight::route('GET /projects/@id:[0-9]+', function ($id) {
 });
 
 Flight::route('POST /projects', function () {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::project_service()->add($data), 201);
 });
 
 Flight::route('PUT /projects/@id:[0-9]+', function ($id) {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::project_service()->update($data, $id));
 });
 

@@ -10,12 +10,12 @@ Flight::route('GET /users/@id:[0-9]+', function ($id) {
 });
 
 Flight::route('POST /users', function () {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::user_service()->add($data), 201);
 });
 
 Flight::route('PUT /users/@id:[0-9]+', function ($id) {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::user_service()->update($data, $id));
 });
 

@@ -169,22 +169,46 @@
   backend routing pattern.
 
 ### Tools and tasks — milestone 3 review corrections
-- **Tool/model:** Copilot SDK in VS Code (model not specified)
-- **Task:** Continue the Milestone 3 review corrections through the remaining
-  phases, including relationship endpoints, OpenAPI synchronization, database
-  verification, and documentation updates.
-- **Main prompt:** “I have uploaded 10 files. First read the Project requirements
-  file. Milestone 1 and 2 are implemeted we are continue the work from there.
-  Other 9 files are HOW you should implement milestone 3.”
-- **What was generated:** Project-review and user-favorite relationship
-  endpoints, synchronized OpenAPI and request documentation, a repeatable local
-  database reset verification, and updated contributor setup guidance.
-- **What was kept, changed, or rejected:** The existing route/service/DAO
-  architecture and database schema were kept. Only the approved review
-  uniqueness constraint and the requested milestone documentation were retained;
-  no commits or pushes were made.
+- **Tool/model:** Copilot SDK in VS Code / GPT-5.6 Luna
+- **Task:** Apply the Phase 2 corrections for the Milestone 3 review,
+  including request coverage, database verification, weather null handling,
+  review response data, Swagger formatting and schemas, seed credentials, and
+  documentation corrections.
+- **Main prompt:** “Phase-2 corrections for Milestone 3. Do not touch
+  frontend/, do not commit. 1. docs/api.http: rewrite it so EVERY request is
+  preceded by its own "### <description> (expected <status>)" line ... 6.
+  docs/AI_LOG.md, the "milestone 3 review corrections" entry: write the real
+  model name; replace "Main prompt" with the review-correction prompt I gave
+  you; remove the claim that the schema was kept ...”
+- **What was generated:** A deterministic REST Client request sequence with
+  expected statuses, the `Demo1234` seed password hash, null-preserving
+  Open-Meteo forecast values, reviewer fields in project reviews, formatted
+  course-style OpenAPI attributes and feed schemas, and updated README and
+  AI-log documentation. The database import now drops and recreates the
+  database and enforces the unique user/project review constraint.
+- **What was kept, changed, or rejected:** The existing frontend was left
+  untouched and no commit or push was made. The backend route/service/DAO
+  structure was retained while course deviations in constructor defaults,
+  request handling, Open-Meteo service organization, and OpenAPI naming and
+  formatting were corrected.
 
 ### Where the AI was wrong — milestone 3 review corrections
-- One OpenAPI operation initially lacked a summary after the documentation
-  pass. The generated-specification validation found the missing summary on
-  the review update operation, so it was added before completion.
+- The original Milestone 3 implementation returned a generic 500 when the
+  email field was missing. Validation was moved before direct array access.
+- Empty-password user updates were rejected instead of preserving the existing
+  password. Updates now treat an empty password as “unchanged.”
+- Project `image_url` values were not validated. URL validation was added.
+- Duplicate reviews were allowed and review ownership fields could be edited.
+  Duplicate checks and immutable `project_id`/`user_id` handling were added.
+- The SQL import was not re-importable. `looply.sql` now drops and recreates
+  the database and includes `uq_reviews_user_project`.
+- Rain-shower weather codes used a snow icon. The WMO mapping now assigns the
+  rain icon.
+- The User response schema exposed the password through the shared input
+  schema. The response schema now excludes the password and marks the input
+  property write-only.
+- Course deviations were also corrected: service constructor defaults use the
+  course pattern, routes assign request data before service calls, the
+  Open-Meteo service follows the course external-service structure, and
+  OpenAPI path methods, headers, multiline attributes, examples, and response
+  schemas follow the course documentation style.

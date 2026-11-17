@@ -133,9 +133,9 @@ placeholders for local development and must be changed before deployment.
 
 | Role | Email | Password |
 |---|---|---|
-| User | maya@example.test | `demo-password` |
-| User | jonah@example.test | `demo-password` |
-| Admin | nora@example.test | `demo-password` |
+| User | maya@example.test | `Demo1234` |
+| User | jonah@example.test | `Demo1234` |
+| Admin | nora@example.test | `Demo1234` |
 
 Authentication and authorization are scheduled for Milestone 4; these accounts
 are currently database records, not login accounts.

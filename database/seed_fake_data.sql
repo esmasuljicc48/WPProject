@@ -14,11 +14,11 @@ ON DUPLICATE KEY UPDATE
 INSERT INTO users
     (first_name, last_name, email, password_hash, role, location, bio)
 VALUES
-    ('Maya', 'Parker', 'maya@example.test', '$2y$10$Lkbm1B/HGm3TZ9zT7m/n6.BpRhnHteiLX1ARiVZXIf.0LezTNjOWq', 'user', 'Portland, OR',
+    ('Maya', 'Parker', 'maya@example.test', '$2y$10$3oEekfrldPpxaLqVlslaje7wZgXnZmZUGBbEcHc6vnrFeE6Wn3cRu', 'user', 'Portland, OR',
      'Loves soft yarns, quiet mornings, and coastal color palettes.'),
-    ('Jonah', 'Reed', 'jonah@example.test', '$2y$10$Lkbm1B/HGm3TZ9zT7m/n6.BpRhnHteiLX1ARiVZXIf.0LezTNjOWq', 'user', 'Brighton, UK',
+    ('Jonah', 'Reed', 'jonah@example.test', '$2y$10$3oEekfrldPpxaLqVlslaje7wZgXnZmZUGBbEcHc6vnrFeE6Wn3cRu', 'user', 'Brighton, UK',
      'A weekend crocheter collecting useful handmade pieces.'),
-    ('Nora', 'Ellis', 'nora@example.test', '$2y$10$Lkbm1B/HGm3TZ9zT7m/n6.BpRhnHteiLX1ARiVZXIf.0LezTNjOWq', 'admin', 'Halifax, NS',
+    ('Nora', 'Ellis', 'nora@example.test', '$2y$10$3oEekfrldPpxaLqVlslaje7wZgXnZmZUGBbEcHc6vnrFeE6Wn3cRu', 'admin', 'Halifax, NS',
      'Keeps the Looply community organized and welcoming.')
 ON DUPLICATE KEY UPDATE
     first_name = VALUES(first_name),

@@ -10,12 +10,12 @@ Flight::route('GET /categories/@id:[0-9]+', function ($id) {
 });
 
 Flight::route('POST /categories', function () {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::category_service()->add($data), 201);
 });
 
 Flight::route('PUT /categories/@id:[0-9]+', function ($id) {
-    $data = Flight::request()->data->getData();
+    $data = get_request_data();
     Flight::json(Flight::category_service()->update($data, $id));
 });
 

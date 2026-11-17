@@ -16,6 +16,26 @@ require_once __DIR__ . '/services/ReviewService.php';
 require_once __DIR__ . '/services/FavoriteService.php';
 require_once __DIR__ . '/services/OpenMeteoService.php';
 
+function get_request_data()
+{
+    $data = Flight::request()->data->getData();
+    if (!empty($data)) {
+        return $data;
+    }
+
+    $body = Flight::request()->getBody();
+    if ($body === '') {
+        return [];
+    }
+
+    $decoded = json_decode($body, true);
+    if (!is_array($decoded)) {
+        throw new ValidationException('Request body must be a valid JSON object.');
+    }
+
+    return $decoded;
+}
+
 /* Register every service once; routes access the shared service instances. */
 Flight::register('category_service', 'CategoryService');
 Flight::register('user_service', 'UserService');

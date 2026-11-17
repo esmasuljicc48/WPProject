@@ -71,16 +71,16 @@ class OpenMeteoService
         $daily = $data['daily'];
         $result_days = [];
         foreach ($daily['time'] as $i => $date) {
-            $code = (int) ($daily['weather_code'][$i] ?? -1);
+            $code = isset($daily['weather_code'][$i]) ? (int) $daily['weather_code'][$i] : null;
             [$description, $icon] = self::WEATHER_CODES[$code] ?? ['Unknown', 'question-circle'];
             $result_days[] = [
                 'date' => $date,
                 'weather_code' => $code,
                 'description' => $description,
                 'icon' => $icon,
-                'temp_max' => round((float) ($daily['temperature_2m_max'][$i] ?? 0)),
-                'temp_min' => round((float) ($daily['temperature_2m_min'][$i] ?? 0)),
-                'precipitation_probability' => (int) ($daily['precipitation_probability_max'][$i] ?? 0),
+                'temp_max' => isset($daily['temperature_2m_max'][$i]) ? round((float) $daily['temperature_2m_max'][$i]) : null,
+                'temp_min' => isset($daily['temperature_2m_min'][$i]) ? round((float) $daily['temperature_2m_min'][$i]) : null,
+                'precipitation_probability' => isset($daily['precipitation_probability_max'][$i]) ? (int) $daily['precipitation_probability_max'][$i] : null,
             ];
         }
 
