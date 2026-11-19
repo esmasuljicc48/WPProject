@@ -16,6 +16,15 @@ class Config
     public static function DB_NAME()     { return self::get_env('DB_NAME', 'looply'); }
     public static function DB_USER()     { return self::get_env('DB_USER', 'root'); }
     public static function DB_PASSWORD() { return self::get_env('DB_PASSWORD', ''); }
+    public static function OPEN_METEO_GEOCODING_URL()
+    {
+        return self::get_env('OPEN_METEO_GEOCODING_URL', 'https://geocoding-api.open-meteo.com');
+    }
+    public static function OPEN_METEO_FORECAST_URL()
+    {
+        return self::get_env('OPEN_METEO_FORECAST_URL', 'https://api.open-meteo.com');
+    }
+    public static function OPEN_METEO_TIMEOUT() { return self::get_env('OPEN_METEO_TIMEOUT', 5); }
 
     /**
      * Environment variables (set on the server) win over the default values above.

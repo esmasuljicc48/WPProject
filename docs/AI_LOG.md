@@ -136,3 +136,79 @@
 ### Where the AI was wrong
 -First mistake is making completely diffrent code from what I asked him.
 -Second mistake is that he did not tell me that he could not acess a github repositry until I asked him if he can do that.
+
+## Milestone 3
+
+### Tools and tasks
+- **Tool/model:** Copilot SDK in VS Code (model not specified)
+- **Task:** Implement the Milestone 3 services, FlightPHP presentation layer,
+  OpenAPI/Swagger documentation, external API endpoint, and related README
+  updates using the uploaded requirements and course lab patterns.
+- **Main prompt:** “I have uploaded 10 files. First read the Project requirements
+  file. Milestone 1 and 2 are implemeted we are to continue the work from there.
+  Other 9 files are HOW you should implement milestone 3.”
+- **What was generated:** Reusable service exceptions and validators, one
+  service per Looply entity, REST routes with centralized error handling,
+  Open-Meteo weather integration, Swagger UI/OpenAPI attributes, a built-in
+  server router, and Milestone 3 README documentation.
+- **What was kept, changed, or rejected:** Existing Milestone 1 frontend,
+  Milestone 2 database schema, and DAO layout were kept. The course sample's
+  `backend/rest` layout was adapted to the repository's existing
+  `backend/dao`, `backend/services`, and `backend/routes` structure.
+
+### Where the AI was wrong
+- **Service method signature:** The first implementation omitted the optional
+  `$id` parameter from two overridden `validate()` methods. PHP's compatibility
+  check exposed this during the first HTTP smoke test; the methods were updated
+  to match `BaseService::validate($entity, $id = null)`.
+- **Built-in server routing:** The first smoke test used `backend/index.php`
+  directly, which correctly served API routes but sent the Swagger URL to the
+  Flight 404 handler because static documentation files were not routed. This
+  was noticed when the Swagger request returned `Endpoint not found`; the
+  project-level `server.php` was added using the course's static-file and
+  backend routing pattern.
+
+### Tools and tasks — milestone 3 review corrections
+- **Tool/model:** Copilot SDK in VS Code / GPT-5.6 Luna
+- **Task:** Apply the Phase 2 corrections for the Milestone 3 review,
+  including request coverage, database verification, weather null handling,
+  review response data, Swagger formatting and schemas, seed credentials, and
+  documentation corrections.
+- **Main prompt:** “Phase-2 corrections for Milestone 3. Do not touch
+  frontend/, do not commit. 1. docs/api.http: rewrite it so EVERY request is
+  preceded by its own "### <description> (expected <status>)" line ... 6.
+  docs/AI_LOG.md, the "milestone 3 review corrections" entry: write the real
+  model name; replace "Main prompt" with the review-correction prompt I gave
+  you; remove the claim that the schema was kept ...”
+- **What was generated:** A deterministic REST Client request sequence with
+  expected statuses, the `Demo1234` seed password hash, null-preserving
+  Open-Meteo forecast values, reviewer fields in project reviews, formatted
+  course-style OpenAPI attributes and feed schemas, and updated README and
+  AI-log documentation. The database import now drops and recreates the
+  database and enforces the unique user/project review constraint.
+- **What was kept, changed, or rejected:** The existing frontend was left
+  untouched and no commit or push was made. The backend route/service/DAO
+  structure was retained while course deviations in constructor defaults,
+  request handling, Open-Meteo service organization, and OpenAPI naming and
+  formatting were corrected.
+
+### Where the AI was wrong — milestone 3 review corrections
+- The original Milestone 3 implementation returned a generic 500 when the
+  email field was missing. Validation was moved before direct array access.
+- Empty-password user updates were rejected instead of preserving the existing
+  password. Updates now treat an empty password as “unchanged.”
+- Project `image_url` values were not validated. URL validation was added.
+- Duplicate reviews were allowed and review ownership fields could be edited.
+  Duplicate checks and immutable `project_id`/`user_id` handling were added.
+- The SQL import was not re-importable. `looply.sql` now drops and recreates
+  the database and includes `uq_reviews_user_project`.
+- Rain-shower weather codes used a snow icon. The WMO mapping now assigns the
+  rain icon.
+- The User response schema exposed the password through the shared input
+  schema. The response schema now excludes the password and marks the input
+  property write-only.
+- Course deviations were also corrected: service constructor defaults use the
+  course pattern, routes assign request data before service calls, the
+  Open-Meteo service follows the course external-service structure, and
+  OpenAPI path methods, headers, multiline attributes, examples, and response
+  schemas follow the course documentation style.

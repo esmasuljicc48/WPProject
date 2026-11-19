@@ -1,0 +1,308 @@
+@base = http://localhost:8000/backend
+@json = application/json
+
+### API health (expected 200)
+GET {{base}}/
+
+### List categories (expected 200)
+GET {{base}}/categories
+
+### Get seeded category (expected 200)
+GET {{base}}/categories/1
+
+### Get missing category (expected 404)
+GET {{base}}/categories/999999
+
+### Create category without projects (expected 201)
+POST {{base}}/categories
+Content-Type: {{json}}
+
+{
+  "name": "Temporary Category",
+  "description": "Deleted during the API verification sequence."
+}
+
+### Reject empty category name (expected 400)
+POST {{base}}/categories
+Content-Type: {{json}}
+
+{
+  "name": ""
+}
+
+### Reject duplicate category (expected 400)
+POST {{base}}/categories
+Content-Type: {{json}}
+
+{
+  "name": "Knitting"
+}
+
+### Update seeded category (expected 200)
+PUT {{base}}/categories/1
+Content-Type: {{json}}
+
+{
+  "name": "Knitting",
+  "description": "Projects made with knitting needles."
+}
+
+### Delete category without projects (expected 200)
+DELETE {{base}}/categories/5
+
+### Reject deleting missing category (expected 404)
+DELETE {{base}}/categories/999999
+
+### List users (expected 200)
+GET {{base}}/users
+
+### Get seeded user (expected 200)
+GET {{base}}/users/1
+
+### Get missing user (expected 404)
+GET {{base}}/users/999999
+
+### List user projects (expected 200)
+GET {{base}}/users/1/projects
+
+### List user favorites (expected 200)
+GET {{base}}/users/1/favorites
+
+### Create user (expected 201)
+POST {{base}}/users
+Content-Type: {{json}}
+
+{
+  "first_name": "Ana",
+  "last_name": "Kovac",
+  "email": "ana@example.test",
+  "password": "Secret123"
+}
+
+### Reject duplicate email (expected 400)
+POST {{base}}/users
+Content-Type: {{json}}
+
+{
+  "first_name": "Another",
+  "last_name": "Maya",
+  "email": "maya@example.test",
+  "password": "Secret123"
+}
+
+### Reject invalid role (expected 400)
+POST {{base}}/users
+Content-Type: {{json}}
+
+{
+  "first_name": "Invalid",
+  "last_name": "Role",
+  "email": "invalid-role@example.test",
+  "password": "Secret123",
+  "role": "owner"
+}
+
+### Reject weak password (expected 400)
+POST {{base}}/users
+Content-Type: {{json}}
+
+{
+  "first_name": "Weak",
+  "last_name": "Password",
+  "email": "weak-password@example.test",
+  "password": "secretpass"
+}
+
+### Update user while preserving password (expected 200)
+PUT {{base}}/users/1
+Content-Type: {{json}}
+
+{
+  "first_name": "Maya",
+  "last_name": "Parker",
+  "email": "maya@example.test",
+  "password": ""
+}
+
+### Reject deleting missing user (expected 404)
+DELETE {{base}}/users/999999
+
+### List all projects (expected 200)
+GET {{base}}/projects
+
+### List public projects (expected 200)
+GET {{base}}/projects?privacy=public
+
+### List private projects (expected 200)
+GET {{base}}/projects?privacy=private
+
+### Reject invalid privacy filter (expected 400)
+GET {{base}}/projects?privacy=invalid
+
+### Get seeded project (expected 200)
+GET {{base}}/projects/1
+
+### Get missing project (expected 404)
+GET {{base}}/projects/999999
+
+### List project reviews (expected 200)
+GET {{base}}/projects/1/reviews
+
+### Create project for deletion (expected 201)
+POST {{base}}/projects
+Content-Type: {{json}}
+
+{
+  "user_id": 1,
+  "category_id": 1,
+  "title": "Temporary Project",
+  "description": "Deleted during the API verification sequence.",
+  "image_url": "https://example.test/temporary.jpg",
+  "privacy": "public"
+}
+
+### Reject invalid project image URL (expected 400)
+POST {{base}}/projects
+Content-Type: {{json}}
+
+{
+  "user_id": 1,
+  "category_id": 1,
+  "title": "Invalid Image Project",
+  "image_url": "not a url",
+  "privacy": "public"
+}
+
+### Update project with full object (expected 200)
+PUT {{base}}/projects/1
+Content-Type: {{json}}
+
+{
+  "user_id": 1,
+  "category_id": 1,
+  "title": "Harbor Mist Cardigan",
+  "image_url": "https://images.unsplash.com/photo-1610701596007-11502861dcfa",
+  "privacy": "public"
+}
+
+### Delete created project (expected 200)
+DELETE {{base}}/projects/6
+
+### Reject deleting missing project (expected 404)
+DELETE {{base}}/projects/999999
+
+### List reviews (expected 200)
+GET {{base}}/reviews
+
+### Get seeded review (expected 200)
+GET {{base}}/reviews/1
+
+### Get missing review (expected 404)
+GET {{base}}/reviews/999999
+
+### Create review for a new user/project pair (expected 201)
+POST {{base}}/reviews
+Content-Type: {{json}}
+
+{
+  "project_id": 1,
+  "user_id": 2,
+  "rating": 5,
+  "notes": "A relaxing project."
+}
+
+### Reject duplicate review (expected 400)
+POST {{base}}/reviews
+Content-Type: {{json}}
+
+{
+  "project_id": 1,
+  "user_id": 2,
+  "rating": 5
+}
+
+### Reject rating outside 1 to 5 (expected 400)
+POST {{base}}/reviews
+Content-Type: {{json}}
+
+{
+  "project_id": 2,
+  "user_id": 2,
+  "rating": 6
+}
+
+### Reject invalid pattern URL (expected 400)
+POST {{base}}/reviews
+Content-Type: {{json}}
+
+{
+  "project_id": 2,
+  "user_id": 2,
+  "rating": 4,
+  "pattern_url": "bad"
+}
+
+### Update seeded review (expected 200)
+PUT {{base}}/reviews/1
+Content-Type: {{json}}
+
+{
+  "rating": 4
+}
+
+### Delete created review (expected 200)
+DELETE {{base}}/reviews/6
+
+### Reject deleting missing review (expected 404)
+DELETE {{base}}/reviews/999999
+
+### List favorites (expected 200)
+GET {{base}}/favorites
+
+### Get seeded favorite (expected 200)
+GET {{base}}/favorites/2/1
+
+### Create favorite for a new user/project pair (expected 201)
+POST {{base}}/favorites
+Content-Type: {{json}}
+
+{
+  "user_id": 1,
+  "project_id": 2
+}
+
+### Reject duplicate favorite (expected 400)
+POST {{base}}/favorites
+Content-Type: {{json}}
+
+{
+  "user_id": 1,
+  "project_id": 2
+}
+
+### Reject favorite update (expected 400)
+PUT {{base}}/favorites/2/1
+Content-Type: {{json}}
+
+{}
+
+### Delete created favorite (expected 200)
+DELETE {{base}}/favorites/1/2
+
+### Reject deleting missing favorite (expected 404)
+DELETE {{base}}/favorites/999999/999999
+
+### Get weather forecast (expected 200)
+GET {{base}}/weather/forecast?city=Sarajevo&days=7
+
+### Reject unknown city (expected 404)
+GET {{base}}/weather/forecast?city=Xqzzyy
+
+### Reject short city name (expected 400)
+GET {{base}}/weather/forecast?city=S
+
+### Reject forecast longer than 16 days (expected 400)
+GET {{base}}/weather/forecast?city=Sarajevo&days=17
+
+### Reject unknown route (expected 404)
+GET {{base}}/not-a-route
